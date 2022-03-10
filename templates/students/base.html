@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block extra_block %}
+<div class="menu py-1 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav class="navbar navbar-light bg-light">
+                    <span>
+                        <a class="nav-pills mr-4" href="#">{{user}}</a>
+                        <a class="nav-pills" href="#">My Courses</a>
+                    </span>
+                    
+                    <form action="/institutes/search" class="form-inline">
+                        <input type="hidden" name="student_city" id="student_city" value="">
+                        <input class="form-control mr-sm-2" type="search" name="search_key" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

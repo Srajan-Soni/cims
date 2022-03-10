@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block extra_block %}
+    <div class="menu py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <nav class="nav  nav-pills">
+                        <a href="/institutes/courses" class="nav-link p-2 font-weight-bold">Our Courses</a>
+                        <a href="/institutes/batches" class="nav-link p-2 font-weight-bold">Batches</a>
+                        <a href="" class="nav-link p-2 font-weight-bold">Enrollments</a>
+                        <a href="/teachers/teacher" class="nav-link p-2 font-weight-bold">Teachers</a>
+                    </nav>
+                </div>                
+                <div class="col-lg-6">
+                    <nav class="nav nav-pills">                        
+                        <a href="/institutes/profile" class="nav-link p-2 font-weight-bold ml-lg-auto">Profile</a>
+                        <a href="/institutes/pics" class="nav-link p-2 font-weight-bold">Institute Pics</a>                        
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

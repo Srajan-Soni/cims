@@ -1,0 +1,373 @@
+{% extends 'institutes/base.html' %}
+
+{% block title_tag %}
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/dropzone.min.css' %}">
+    
+    <title>Institute Pics</title>
+
+    <style>
+        .nav a{
+            font-size: 1.1rem;
+            color: #e84393;
+        }
+
+        .nav a:hover{
+            color: #fff;
+            background-color: #e84393;    
+        }
+
+        .dropzone{
+            border: 3px dashed #bbb;
+            color: #555;
+        }
+    </style>
+{% endblock %}
+
+
+{% block main_block %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/institutes/dashboard">{{request.user}} (Dashboard)</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Institute Pics</li>
+                    </ol>
+                </nav>
+            </div>            
+        </div>
+        <div class="row">
+            <div class="col">
+                <h4 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Institute Pics</h4>
+                
+                <ul class="nav nav-tabs" id="show_upload_tabs">
+                    <li class="nav-item">
+                        <a href="#id_show" class="nav-link active" data-toggle="tab">All Pics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#id_upload" class="nav-link" data-toggle="tab">Upload Pics</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active show fade p-5" id="id_show">
+                        <div class="accordion mb-5" id="all_pics">
+                            <div class="card">
+                                <div class="card-header" id="card_interior">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_interior_pics" aria-expanded="true" aria-controls="_interior_pics">
+                                            Interior Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_interior_pics" class="collapse show" aria-labelledby="card_interior" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        Interior All Pics +++++++++++++
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_exterior">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_exterior_pics" aria-expanded="true" aria-controls="_exterior_pics">
+                                            Exterior Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_exterior_pics" class="collapse" aria-labelledby="card_exterior" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        Exterior All Pics +++++++++++++
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_lab">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_lab_pics" aria-expanded="true" aria-controls="_lab_pics">
+                                            Lab Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_lab_pics" class="collapse" aria-labelledby="card_lab" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        Lab All Pics +++++++++++++
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_library">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_library_pics" aria-expanded="true" aria-controls="_library_pics">
+                                            Library Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_library_pics" class="collapse" aria-labelledby="card_library" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        Library All Pics +++++++++++++
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_classroom">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_classroom_pics" aria-expanded="true" aria-controls="_classroom_pics">
+                                            Class Room Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_classroom_pics" class="collapse" aria-labelledby="card_classroom" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        {% if classroom_pics %}
+                                            <div class="card-columns">
+                                                {% for pic in classroom_pics %}  
+                                                    <div class="card">                                          
+                                                        <img src="/static/media/{{pic.pic_path}}" class="card-img-top" class="img-thumbnail" alt=""> 
+                                                    </div>                                               
+                                                {% endfor %}
+                                            </div>
+                                        {% else %}
+                                            <h3 class="text-muted">No Images</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_office">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_office_pics" aria-expanded="true" aria-controls="_office_pics">
+                                            Office Room Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_office_pics" class="collapse" aria-labelledby="card_office" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        Office Room All Pics +++++++++++++
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_parking">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_parking_pics" aria-expanded="true" aria-controls="_parking_pics">
+                                            Parking Room Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_parking_pics" class="collapse" aria-labelledby="card_parking" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        {% if parking_pics %}
+                                            {% for pic in parking_pics %}                                            
+                                                <img src="/static/media/{{pic.pic_path}}" class="img-thumbnail" height="150" alt="">                                            
+                                            {% endfor %}
+                                        {% else %}
+                                            <h3 class="text-muted">No Images</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_sportsarea">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_sportsarea_pics" aria-expanded="true" aria-controls="_sportsarea_pics">
+                                            Sports Area Room Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_sportsarea_pics" class="collapse" aria-labelledby="card_sportsarea" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        {% if sportsarea_pics %}
+                                            {% for pic in sportsarea_pics %}                                            
+                                                <img src="/static/media/{{pic.pic_path}}" height="150" class="img-thumbnail" alt="">                                            
+                                            {% endfor %}
+                                        {% else %}
+                                            <h3 class="text-muted">No Images</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header" id="card_facultyroom">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#_facultyroom_pics" aria-expanded="true" aria-controls="_facultyroom_pics">
+                                            Faculty Room Area Room Pics
+                                        </button>
+                                    </h2>
+                                </div>
+                                <div id="_facultyroom_pics" class="collapse" aria-labelledby="card_facultyroom" data-parent="#all_pics">
+                                    <div class="card-body">
+                                        {% if facultyroom_pics %}
+                                            {% for pic in facultyroom_pics %}                                            
+                                                <img src="/static/media/{{pic.pic_path}}" height="150" class="img-thumbnail" alt="">                                            
+                                            {% endfor %}
+                                        {% else %}
+                                            <h3 class="text-muted">No Images</h3>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-pane fade p-5" id="id_upload">                
+                        <ul class="nav nav-tabs" id="tabs">
+                            <li class="nav-item">
+                                <a href="#id_interior" class="nav-link active" data-toggle="tab">Interior</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_exterior" class="nav-link" data-toggle="tab">Exterior</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_lab" class="nav-link" data-toggle="tab">Lab</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_library" class="nav-link" data-toggle="tab">Library</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_classroom" class="nav-link" data-toggle="tab">Class Room</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_office" class="nav-link" data-toggle="tab">Office</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_parking" class="nav-link" data-toggle="tab">Parking</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_sportsarea" class="nav-link" data-toggle="tab">Sports Area</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#id_facultyroom" class="nav-link" data-toggle="tab">Faculty Room</a>
+                            </li>
+                        </ul>
+    
+                        <div class="tab-content" id="panels">
+                            <div class="tab-pane active show fade p-5" id="id_interior">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Interior Pics</h5>
+    
+                                <form class="dropzone" id="picup_interior">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_interior" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_exterior">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Exterior Pics</h5>
+    
+                                <form class="dropzone" id="picup_exterior">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_exterior" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_lab">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Lab Pics</h5>
+    
+                                <form class="dropzone" id="picup_lab">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_lab" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_library">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Library Pics</h5>
+    
+                                <form class="dropzone" id="picup_library">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_library" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_classroom">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Class Room Pics</h5>
+                                
+                                <form class="dropzone" id="picup_classroom">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_classroom" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_office">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Office Pics</h5>
+    
+                                <form class="dropzone" id="picup_office">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_office" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_parking">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Parking Pics</h5>
+    
+                                <form class="dropzone" id="picup_parking">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_parking" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_sportsarea">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Sports Area Pics</h5>
+    
+                                <form class="dropzone" id="picup_sportsarea">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_sportsarea" value="Upload">
+                            </div>
+                            <div class="tab-pane fade p-5" id="id_facultyroom">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Faculty Room Pics</h5>
+    
+                                <form class="dropzone" id="picup_facultyroom">
+                                    {% csrf_token %}
+                                </form>
+                                <input type="button" id="btn_facultyroom" value="Upload">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block jsblock %}
+
+    <script src="{% static 'js/dropzone.min.js' %}"></script>
+    
+    <script>
+        Dropzone.autoDiscover = false;
+
+        const forms = document.querySelectorAll('.dropzone');
+
+        forms.forEach((form, cn)=>{
+            form.classList.add('rounded-lg');
+            Dropzone.options[form.id] = {	
+                paramName: 'file',
+                maxFilesize: 1,
+                uploadMultiple: true,
+                createImageThumbnails: true,
+                maxFiles: 5,
+                acceptedFiles: '.jpeg,.png,.gif,.jpg',
+                addRemoveLinks: true,
+                autoProcessQueue: false
+            };
+            
+            let picTypeId = cn+1;
+
+            let dz = new Dropzone('#'+form.id, {url: '/institutes/institute_pics_upload/'+picTypeId});    
+            
+            let btn = document.querySelector('#btn_'+form.id.substr(6));
+            btn.dz = dz;
+            btn.classList.add('btn');
+            btn.classList.add('btn-info');
+            btn.classList.add('mt-3');
+
+            btn.addEventListener('click', (event)=>{
+                event.target.dz.processQueue();
+            });
+        });	
+	</script>
+{% endblock %}

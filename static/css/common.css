@@ -1,0 +1,83 @@
+.header{
+    background-color: rgba(241,242,246,.7);
+    border-bottom: 1px solid #ddd;
+}
+
+.logo{
+    font-size: 3.5rem;
+    color: #01a3a4;
+}
+
+.company-name{
+    display: inline-block;
+    margin: 0px;
+    color: #0984e3;
+}
+
+.city-select{
+    display: inline-block;
+}
+
+.control{
+    font-size: 2rem;
+}
+
+.menu{
+    border-bottom: 1px solid #ddd;
+}
+
+.banner{
+    background: url(../images/banner.jpg) no-repeat 0px -340px;
+    background-size: cover;
+    height: 500px;
+}
+
+.title-text{
+    background-color: rgba(255,255,255,.7);    
+}
+
+.title-content{
+    background-color: rgba(255, 255, 255, .7);
+}
+
+.nav a{
+    font-size: 1.1rem;
+    color: #e84393;
+}
+
+.nav a:hover{
+    color: #fff;
+    background-color: rgba(155,89,182,.7);    
+}
+
+.badges{
+    font-size: 28px;
+    font-weight: bold;
+    border: 1px solid #ccc;
+}
+
+.main-body{
+    height: 400px;
+}
+
+.footer{
+    background-color: rgba(241,242,246,.7);
+    border-top: 1px solid #ddd;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.footer-links a{
+    color: #e84393;
+}
+
+.footer-links a:hover{
+    background-color: #e84393;
+    color: #fff;
+}
+
+.big-img{
+    font-size: 250px;
+    color: #7f8c8d;
+}

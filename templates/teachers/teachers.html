@@ -1,0 +1,193 @@
+{% extends 'institutes/base.html' %}
+
+{% block title_tag %}
+    {% load static %}
+    
+    <link rel="stylesheet" href="{% static 'css/dropzone.min.css' %}">
+
+    <title>Institute Teachers</title>
+    
+    <style>
+        #teacher-form-box{
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            display: none;
+        }
+
+        /*#form-box-container{
+
+        }*/
+
+        #close{
+            cursor: pointer;
+            font-size: 1.2rem;
+            border: 1px solid red;
+            color: red;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        #teacher-pic-box{
+            display: none;
+        }
+
+        #picup{
+            border: 3px dashed #ccc;
+            border-radius: 7px;
+        }        
+    </style>
+{% endblock %}
+
+{% block main_block %}
+    <div id="teacher-form-box">
+        <div id="form-box-container" class="container mx-auto mt-5 w-50 border border-light rounded px-5 py-3 bg-light">
+            <i class="fa fa-times float-right" id="close"></i>
+
+            <h4 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4 mt-3">New Teacher</h4>
+
+            <form id="teacher-form" class="px-5">
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <input type="text" name="first_name" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="col-6">
+                        <input type="text" name="last_name" class="form-control" placeholder="Last Name">
+                    </div>
+                </div>
+                <div class="form-row mb-4">
+                    <div class="col-6">
+                        <input type="email" name="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-6">
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                </div>                
+                <div class="form-inline pl-2">
+                    <h6 class="pt-2"><label for="">Gender:</label></h6>
+                    <div class="custom-control custom-radio custom-control-inline mx-2">
+                        <input type="radio" name="gender" value="m" class="custom-control-input">
+                        <label class="custom-control-label" for="gender-male">Male</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline mr-5">
+                        <input type="radio" name="gender" value="f" class="custom-control-input">
+                        <label class="custom-control-label" for="gender-female">Female</label>
+                    </div>
+                    <h6 class="pt-2"><label for="dob">Dob</label></h6>
+                    <input type="date" name="dob" class="form-control ml-2">
+                </div>
+                <div class="form-group mt-3 px-1">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" name="address" rows="2"></textarea>
+                </div>
+                <div class="form-inline mt-4">
+                    <label for="city">City</label>
+                    <select class="custom-select ml-3" name="city_id">
+                        <option>Select City</option>
+                        {% for city in all_cities %}
+                            <option value="{{city.id}}">{{city.city}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="number" placeholder="Contact" class="form-control ml-5" name="contact">
+                </div>
+                <div class="form-row mt-4">
+                    <div class="col-6">
+                        <input type="text" name="qualification" class="form-control" placeholder="Qualification">
+                    </div>
+                    <div class="col-6">
+                        <input type="number" name="experience" class="form-control" placeholder="Experience">
+                    </div>
+                </div>
+                <input type="button" id="add-teacher-button" class="btn btn-primary my-4" value="Add Teacher">
+            </form>
+
+            <div id="teacher-pic-box" class="mx-5">
+                <h5 class="text-secondary mb-3" id="teacher-title">Mukesh Kumar</h5>
+
+                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Upload Teacher Pic</h5>
+
+                <form class="dropzone" id="picup">
+                    {% csrf_token %}
+                </form>
+
+                <input type="button" class="btn btn-info mt-3 mb-4" id="btn" value="Upload Teacher Pic">
+            </div>            
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"><a href="/institutes/dashboard">{{request.user}} (Dashboard)</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Teachers</li>
+                    </ol>
+                </nav>
+            </div>            
+        </div>
+
+        <div class="row px-3 pt-4">
+            <div class="col">
+                <h4 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Institute Teachers</h4>
+            </div>
+        </div>
+
+        <div class="d-inline-block w-100 px-5">
+            <button id="new-teacher-btn" class="btn btn-info float-right" type='button'><i class="fa fa-plus"></i> New Teacher</button>
+        </div>
+
+        <!-- All teachers -->
+        <div class="row">
+            <div class="col mb-5">
+                <div class="mx-4 mt-2 mb-5  rounded">
+                    {% for teacher in all_teachers %}
+                        <div class="card mb-3 border-info">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="{{teacher.profile_pic.url}}" class="img-fluid m-3" alt="">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body px-5">
+                                        <h5 class="card-title">{{teacher.first_name}} {{teacher.last_name}}</h5>
+                                        <p class="card-text">
+                                            <div class="row mb-2">
+                                                <div class="col-6"><b>Qualification</b>: {{teacher.qualification}}</div>                                                
+                                                <div class="col-6"><b>Experience</b>: {{teacher.experience}}</div>                                               
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-6"><b>Gender</b>: {{teacher.gender}}</div>                                                
+                                                <div class="col-6"><b>Dob</b>: {{teacher.dob}}</div>                                               
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6"><b>Address</b>: <br>{{teacher.address}}</div>                                                
+                                                <div class="col-6">                    
+                                                    <div class="row">
+                                                        <div class="col"><b>City</b>: {{teacher.city.city}}</div>
+                                                    </div>                                
+                                                    <div class="row">
+                                                        <div class="col"><b>Contact</b>: {{teacher.contact}}</div>
+                                                    </div>                                                    
+                                                </div>                                               
+                                            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>                
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block jsblock %}   
+    <script src="{% static 'js/dropzone.min.js' %}"></script>
+    
+    <script src="{% static 'js/teachers.js' %}"></script>
+{% endblock %}

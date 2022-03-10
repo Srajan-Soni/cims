@@ -1,0 +1,29 @@
+{% extends 'students/base.html' %}
+
+{% block main_block %}
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {% for batch in all_batches %}
+                <div class="card mb-3 border-secondary">
+                    <div class="row no-gutters">
+                        <div class="col-md-4 p-3">
+                            <img src="{{batch.course.course_pic.url}}" class="w-100">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h4 class="card-title">{{batch.batch_name}}</h4>
+                                <p class="card-text">
+                                    <b>Institute: </b><span>{{batch.course.institute.name}}</span>
+                                    <span>({{batch.course.institute.city.city}})</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

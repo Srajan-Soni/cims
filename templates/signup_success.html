@@ -1,0 +1,42 @@
+{% extends 'institutes/base.html' %}
+
+
+{% block title_tag %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <title>User :: SignUp Success</title>
+{% endblock %}
+
+
+{% block main_block %}
+    <div class="container">
+        <div class="row pb-5">
+            <div class="col-5 text-center border-right border-light pt-5">
+                <i class="fa fa-bank big-img"></i>    
+            </div>
+            <div class="col-7" style="padding-left: 6rem;">
+                
+
+                <h4 class="border-bottom border-primary pl-2 text-primary pb-1 w-75 mb-4">User Signup</h4>
+                
+                <div class="w-100 m-auto border border-secondary rounded">
+                    <h2 class="bg-success p-5 text-white">Thanks for signing up!</h2>
+                    <p class="p-5 lead">
+                        We sent you an account activation mail.
+                        <br>
+                        Please click over the link to activate your account. 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block jsblock %}
+    <script src="{% static 'js/signup.js' %}"></script>
+{% endblock %}

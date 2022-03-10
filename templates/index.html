@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title_tag %}
+    <title>Welcome to ISRDC Jabalpur</title>    
+{% endblock %}
+
+{% block extra_block %}
+    <div class="jumbotron jumbotron-fluid banner">
+        <div class="container">
+            <h1 class="text-dark p-3 title-text">Some text Goes Here</h1>
+            <p class="lead title-content p-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id doloribus veniam aliquam excepturi, eligendi necessitatibus corrupti cupiditate magni eum provident.</p>
+        </div>        
+    </div>
+
+    <div class="menu">
+        <div class="container">
+            <div class="row">
+                <div class="col-4">
+                    <nav class="nav  nav-pills">
+                        <a href="" class="nav-link p-2 font-weight-bold">Courses</a>
+                        <a href="" class="nav-link p-2 font-weight-bold">Institutes</a>
+                    </nav>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <select name="" id="" class="form-control">
+                            <option value="">Search</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <nav class="nav nav-pills">
+                        <a href="" class="nav-link p-2 font-weight-bold ml-auto">My Courses</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block main_block %}
+    <div class="container">
+        <div class="row">
+            <div class="col-4 text-center py-5">
+                <a href="/accounts/login" class="btn btn-secondary bg-white text-secondary p-5 badges shadow"><i class="fa fa-bank mr-2"></i>Institutes</a>
+            </div>
+            <div class="col-4 text-center py-5">
+                <a href="/accounts/login" class="btn btn-secondary bg-white text-secondary p-5 badges shadow"><i class="fa fa-graduation-cap mr-2"></i>Students</a>
+            </div>
+            <div class="col-4 text-center py-5">
+                <button class="btn btn-secondary bg-white text-secondary p-5 badges shadow"><i class="fa fa-users mr-2"></i>Teachers</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

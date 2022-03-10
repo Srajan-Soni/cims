@@ -1,0 +1,257 @@
+{% extends 'institutes/base.html' %}
+
+{% block title_tag %}
+    {% load static %}
+
+    <title>Institute Batches</title>   
+    
+    <style>
+        #id_mode, #id_frequency {
+            padding-left: 15px;
+        }
+
+        #id_mode li, #id_frequency li{
+            list-style: none;
+            display: inline;
+            margin-right: 30px;
+        }
+
+        #id_frequency {
+            margin-left: 15px;
+        }
+
+    </style>
+{% endblock %}
+
+
+{% block main_block %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item" aria-current="page"><a href="/institutes/dashboard">{{request.user}} (Dashboard)</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Batches</li>
+                    </ol>
+                </nav>
+            </div>            
+        </div>
+
+        <div class="row px-3 pt-3">
+            <div class="col">
+                <h4 class="border-bottom border-primary pl-2 text-primary pb-1 mb-4">Institute Batches</h4>
+            </div>
+        </div>
+
+        <div class="row pb-5">
+            <div class="col">
+
+                <div class="card mx-5 mt-3 mb-5">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                              <a class="nav-link active" data-toggle="tab" href="#all_batches">All Batches</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" data-toggle="tab" href="#new_batch">New Batch</a>
+                            </li>
+                          </ul>        
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content">                            
+                            <div class="tab-pane fade show active" id="all_batches">
+                                {% if all_batches %}
+                                {% for batch in all_batches %}
+                                    <div class="card mb-3">
+                                        <div class="row no-gutters">
+                                            <div class="col-md-4 p-3">
+                                                <img src="{{batch.course.course_pic.url}}" alt="..." class="img-fluid">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">{{batch.batch_name}}</h5>
+                                                    <table class="table table-striped">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Teacher</td>
+                                                                <td>{{batch.teacher.first_name}} {{batch.teacher.last_name}}</td>
+                                                                <td>Course</td>
+                                                                <td>{{batch.course.name}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Mode</td>
+                                                                <td>
+                                                                    {% if batch.mode %}
+                                                                        Online
+                                                                    {% else %}
+                                                                        Offline
+                                                                    {% endif %}
+                                                                </td>
+                                                                <td>Frequency</td>
+                                                                <td>
+                                                                    {% if batch.frequency %}
+                                                                        Regular Classes
+                                                                    {% else %}
+                                                                        Alternate Days
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Start Date</td>
+                                                                <td>{{batch.start_date}}</td>
+                                                                <td>Duration</td>
+                                                                <td>{{batch.duration}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Start Time</td>
+                                                                <td>{{batch.start_time}}</td>
+                                                                <td>Student Count</td>
+                                                                <td>{{batch.student_count}}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Course Fees</td>
+                                                                <td>{{batch.course_fees}}</td>
+                                                                <td>Concession</td>
+                                                                <td>{{batch.concession}}</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                {% else %}
+                                    <h3 class="border border-light text-center py-5 text-muted">No Batches To Show!</h3>
+                                {% endif %}    
+                            </div>
+                            <div class="tab-pane fade px-5" id="new_batch">
+                                <h5 class="border-bottom border-primary pl-2 text-primary pb-1 mb-5 mt-3">New Batch</h5>
+                                
+                                <form method="POST" class="px-4">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Batch Name</b></label>
+                                                {{form.batch_name}}
+                                                <!-- <input type="text" name="batch_name" class="form-control"> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Select Course</b></label>
+                                                {{form.course}}                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-check form-check-inline">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        <label for=""><b class="text-muted">Mode</b></label>
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        {{form.mode}} 
+                                                    </div>
+                                                    
+                                                    <!-- <div class="col-md-3">                                                        
+                                                        <input type="radio" name="mode" value="true">
+                                                        <label for="">Online</label>
+                                                    </div>
+                                                    <div class="col-md-3">
+                                                        <input type="radio" name="mode" value="false">
+                                                        <label for="">Offline</label>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <label for=""><b class="text-muted">Frequency</b></label>
+                                                    </div>
+                                                    <div class="col-md-9">
+                                                        {{form.frequency}}
+                                                    </div>
+
+                                                    <!-- <div class="col-md-3">
+                                                        <input type="radio" name="frequency" value="true">
+                                                        <label for="">Regular</label>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <input type="radio" name="frequency" value="false">
+                                                        <label for="">Alternate Days</label>
+                                                    </div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Start Date</b></label>
+                                                {{form.start_date}}
+                                                <!-- <input type="date" name="start_date" class="form-control"> -->
+                                            </div>                                        
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Duration</b></label>
+                                                {{form.duration}}
+                                                <!-- <input type="number" name="duration" class="form-control"> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Start Time</b></label>
+                                                {{form.start_time}}
+                                                <!-- <input type="time" name="start_time" class="form-control"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Select Teacher</b></label>
+                                                {{form.teacher}}
+                                            </div>                                        
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Course Fees</b></label>
+                                                {{form.course_fees}}
+                                                <!-- <input type="number" name="course_fees" class="form-control"> -->
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for=""><b class="text-muted">Concession</b></label>
+                                                {{form.concession}}
+                                                <!-- <input type="number" name="concession" class="form-control"> -->
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <input type="submit" class="btn btn-primary mt-3" value="Create New Batch">
+                                </form>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block jsblock %}
+
+{% endblock %}

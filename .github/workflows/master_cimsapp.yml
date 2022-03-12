@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'cimsapp'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_A180ED41BE134C0C9DAB6EBBE4A65C74 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_C865F0897922411FB37459C4E62E50D1 }}
